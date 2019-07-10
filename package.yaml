@@ -1,0 +1,86 @@
+name:                polysemy-servant
+version:             0.1.0.0
+#synopsis:
+#description:
+homepage:            https://github.com/smaccoun/polysemy-servant#readme
+license:             BSD3
+author:              Steven MacCoun
+copyright:           2019 Author name here
+category:            Web
+extra-source-files:
+- README.md
+
+dependencies:
+  - aeson
+  - name: base
+    version: ">= 4.7 && < 5"
+  - name: relude
+  - text
+  - bytestring
+  - polysemy
+  - servant
+  - servant-server
+  - wai
+  - warp
+  - th-abstraction
+  - purescript-bridge
+  - polysemy-plugin
+  - servant-purescript
+  - purescript-bridge
+  - postgresql-simple
+  - template-haskell
+  - th-abstraction
+  - lens
+  - neat-interpolation
+  - dhall
+
+default-extensions:
+  - NoImplicitPrelude
+  - LambdaCase
+  - ConstraintKinds
+  - DataKinds
+  - DeriveGeneric
+  - FlexibleContexts
+  - FlexibleInstances
+  - GADTs
+  - GeneralizedNewtypeDeriving
+  - KindSignatures
+  - MultiParamTypeClasses
+  - OverloadedStrings
+  - PolyKinds
+  - QuasiQuotes
+  - RankNTypes
+  - RecordWildCards
+  - ScopedTypeVariables
+  - NamedFieldPuns
+  - DefaultSignatures
+  - StandaloneDeriving
+  - TemplateHaskell
+  - TypeApplications
+  - TypeFamilies
+  - TypeOperators
+  - UndecidableInstances
+  - DeriveAnyClass
+  - DerivingStrategies
+  - TypeSynonymInstances
+
+
+ghc-options:
+  - -threaded
+  - -rtsopts
+  - -with-rtsopts=-N
+  - -fwarn-tabs
+  - -fwarn-unused-imports
+  - -fwarn-overlapping-patterns
+  - -fwarn-incomplete-record-updates
+  - -fwarn-missing-signatures
+  - -fwarn-orphans
+  - -fwarn-identities
+  - -Wredundant-constraints
+  - -fplugin=Polysemy.Plugin
+
+
+executables:
+  polysemy-servant:
+    main:             Main.hs
+    source-dirs:      src

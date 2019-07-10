@@ -1,0 +1,143 @@
+
+./Setup.hs,15
+main main1,2
+
+./out/production/polysemy-beam/Server/API/API.hs,85
+module Server.API.API Server.API.API0,1
+type API API6,7
+apiServer apiServer8,9
+
+./out/production/polysemy-beam/Server/Serve.hs,84
+module Server.Serve Server.Serve0,1
+webApp webApp7,8
+runServer runServer10,11
+
+./out/production/polysemy-beam/Main.hs,296
+module Main Main0,1
+type UserAPI UserAPI17,18
+data Teletype Teletype19,20
+  ReadTTY ReadTTY20,21
+  WriteTTY WriteTTY21,22
+runTeletypeIO runTeletypeIO25,26
+data Db Db30,31
+  RunSql RunSql31,32
+runDbIO runDbIO35,36
+runAllIO runAllIO41,42
+myTypes myTypes53,54
+main main56,57
+
+./out/production/polysemy-beam/DB/Migrations/GenSchema.hs,97
+module DB.Migrations.GenSchema DB.Migrations.GenSchema0,1
+genTableScript genTableScript12,13
+
+./out/production/polysemy-beam/DB/Schema.hs,265
+module DB.Schema DB.Schema0,1
+data ShoppingCartDb ShoppingCartDb9,10
+data ShoppingCartDb f = ShoppingCartDbShoppingCartDb9,10
+                      { _shoppingCartUsers _shoppingCartUsers10,11
+checkedDb checkedDb14,15
+shoppingCartDB shoppingCartDB17,18
+
+./out/production/polysemy-beam/DB/Models/Model.hs,43
+module DB.Models.ModelDB.Models.Model0,1
+
+./out/production/polysemy-beam/DB/Models/BlogPost.hs,452
+module DB.Models.BlogPost DB.Models.BlogPost0,1
+data BlogPostT BlogPostT7,8
+    = BlogPostBlogPost8,9
+    { blogPostId blogPostId9,10
+    , title title10,11
+    , body body11,12
+type BlogPost BlogPost14,15
+type UserId UserId15,16
+instance Table Table BlogPostT17,18
+   data PrimaryKey PrimaryKey18,19
+   data PrimaryKey BlogPostT f = BlogPostId BlogPostId18,19
+   primaryKey primaryKey19,20
+sampleBlogPost sampleBlogPost25,26
+
+./out/production/polysemy-beam/DB/Models/User.hs,440
+module DB.Models.User DB.Models.User0,1
+data UserT UserT5,6
+    = UserUser6,7
+    { _userEmail _userEmail7,8
+    , _userFirstName _userFirstName8,9
+    , _userLastName _userLastName9,10
+    , _userPassword _userPassword10,11
+type User User13,14
+type UserId UserId14,15
+instance Table Table UserT16,17
+   data PrimaryKey PrimaryKey17,18
+   data PrimaryKey UserT f = UserId UserId17,18
+   primaryKey primaryKey18,19
+
+./src/Server/API/API.hs,85
+module Server.API.API Server.API.API0,1
+type API API6,7
+apiServer apiServer8,9
+
+./src/Server/Serve.hs,84
+module Server.Serve Server.Serve0,1
+webApp webApp7,8
+runServer runServer10,11
+
+./src/Main.hs,368
+module Main Main0,1
+type UserAPI UserAPI15,16
+data Teletype Teletype17,18
+  ReadTTY ReadTTY18,19
+  WriteTTY WriteTTY19,20
+runTeletypeIO runTeletypeIO23,24
+data Db Db28,29
+  RunSql RunSql29,30
+runDbIO runDbIO33,34
+runAllIO runAllIO39,40
+myTypes myTypes46,47
+writeFrontendTypes writeFrontendTypes49,50
+logStdOut logStdOut53,54
+main main60,61
+
+./src/DB/Migrations/GenSchema.hs,97
+module DB.Migrations.GenSchema DB.Migrations.GenSchema0,1
+genTableScript genTableScript12,13
+
+./src/DB/Schema.hs,265
+module DB.Schema DB.Schema0,1
+data ShoppingCartDb ShoppingCartDb9,10
+data ShoppingCartDb f = ShoppingCartDbShoppingCartDb9,10
+                      { _shoppingCartUsers _shoppingCartUsers10,11
+checkedDb checkedDb14,15
+shoppingCartDB shoppingCartDB17,18
+
+./src/DB/Models/Model.hs,43
+module DB.Models.ModelDB.Models.Model0,1
+
+./src/DB/Models/BlogPost.hs,452
+module DB.Models.BlogPost DB.Models.BlogPost0,1
+data BlogPostT BlogPostT7,8
+    = BlogPostBlogPost8,9
+    { blogPostId blogPostId9,10
+    , title title10,11
+    , body body11,12
+type BlogPost BlogPost14,15
+type UserId UserId15,16
+instance Table Table BlogPostT17,18
+   data PrimaryKey PrimaryKey18,19
+   data PrimaryKey BlogPostT f = BlogPostId BlogPostId18,19
+   primaryKey primaryKey19,20
+sampleBlogPost sampleBlogPost25,26
+
+./src/DB/Models/User.hs,440
+module DB.Models.User DB.Models.User0,1
+data UserT UserT5,6
+    = UserUser6,7
+    { _userEmail _userEmail7,8
+    , _userFirstName _userFirstName8,9
+    , _userLastName _userLastName9,10
+    , _userPassword _userPassword10,11
+type User User13,14
+type UserId UserId14,15
+instance Table Table UserT16,17
+   data PrimaryKey PrimaryKey17,18
+   data PrimaryKey UserT f = UserId UserId17,18
+   primaryKey primaryKey18,19
