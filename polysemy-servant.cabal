@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: df5257f2dcebd6300cb4b736bda5056f0005e39a881bf0456a31171f04df9475
+-- hash: 5326ec0428b6def191e32f02ca608b134aae9a3e90a0f80fb8569f197164c323
 
 name:           polysemy-servant
 version:        0.1.0.0
@@ -37,7 +37,7 @@ executable polysemy-servant
       aeson
     , base >=4.7 && <5
     , bytestring
-    , dhall
+    , dhall ==1.24.0
     , lens
     , neat-interpolation
     , polysemy

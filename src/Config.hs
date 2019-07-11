@@ -1,12 +1,12 @@
 module Config where
 
 import AppBase
-import Database.PostgreSQL.Simple (ConnectInfo(..), defaultConnectInfo)
 import Dhall
 
 data Config =
   Config
     {env :: Environment
+    ,dbConfig :: DBConnectInfo
     } deriving (Generic, Show)
 
 data Environment =
@@ -15,19 +15,15 @@ data Environment =
   | Test
   deriving (Generic, Show)
 
+data DBConnectInfo =
+  DBConnectInfo
+    {dbConnectHost :: Text
+    ,dbConnectPort :: Integer
+    ,dbConnectDatabase :: Text
+    ,dbConnectUser :: Text
+    ,dbConnectPassword :: Text
+    } deriving (Generic, Show)
+
 instance Interpret Environment
 instance Interpret Config
-
-
-dbConnectInfo :: Environment -> ConnectInfo
-dbConnectInfo env =
-  case env of
-    Development ->
-      defaultConnectInfo
-        {connectDatabase = "blog"
-        , connectPort = 54320
-        }
-    Production ->
-      defaultConnectInfo {connectDatabase = "blog"}
-    Test ->
-      defaultConnectInfo {connectDatabase = "blog_test"}
+instance Interpret DBConnectInfo

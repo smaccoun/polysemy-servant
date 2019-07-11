@@ -32,6 +32,7 @@ extra-deps:
 - servant-subscriber-0.6.0.2@sha256:e1cf0d273f2d072f9b36c40a2e18cb1663beaeef400b2351b9a0e15629a12076
 - polysemy-0.4.0.0@sha256:6dfd2070c9f1f8e64ba9fbeee2af59e2893cac8acb066c2c80cf6428e2ddcef9
 - polysemy-plugin-0.2.1.0@sha256:db5aa30eb9610c6c7aca782f68a128fef4656c867ed29ad328eb1322d8d9b414
+- dhall-1.24.0@sha256:1e0e0be836164cee6725f80f81ac2726b2de0acf6efdf622cf05e90323f0a911
 
 # Override default flag values for local packages and extra-deps
 # flags: {}
