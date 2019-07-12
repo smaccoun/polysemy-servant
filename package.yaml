@@ -21,6 +21,7 @@ dependencies:
   - servant-server
   - wai
   - warp
+  - mtl
   - th-abstraction
   - purescript-bridge
   - polysemy

@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 0b7411fbbfa9009e37d0771dbb8c9fd1a0feb3cf29c2b8caaba4840e8df74498
+-- hash: 113729d5caac021b14468b48afc1db52da48df095ebb23bba6a8138fbf9f3391
 
 name:           polysemy-servant
 version:        0.1.0.0
@@ -43,6 +43,7 @@ executable polysemy-servant
     , dhall ==1.24.0
     , lens
     , monad-logger
+    , mtl
     , neat-interpolation
     , persistent
     , persistent-postgresql
