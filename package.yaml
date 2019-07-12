@@ -32,6 +32,12 @@ dependencies:
   - th-abstraction
   - lens
   - neat-interpolation
+  - persistent
+  - persistent-postgresql
+  - resource-pool
+  - monad-logger
+  - unliftio-core
+  - resourcet
   - name: dhall
     version: "1.24.0"
 

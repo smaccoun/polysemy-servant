@@ -2,22 +2,18 @@ module Effects where
 
 import AppBase hiding (Reader, runReader)
 import Effects.Logging
-import Dhall
+import Effects.DB
 import Config
 import Polysemy
 import Polysemy.Reader
 
-runEffects :: Sem '[Reader Config, Log, Lift IO] a -> IO a
-runEffects a = do
-  config@Config{..} <- input auto "./config/config.dhall"
-  case env of
-    Development ->
-      runIO config a
-    _ ->
-      runIO config a
+runEffects :: Config -> Sem '[Reader Config, Db, Log, Lift IO] a -> IO a
+runEffects config a = do
+  runAllIO config a
 
-runIO :: Config -> Sem '[Reader Config, Log, Lift IO] a -> IO a
-runIO config = do
+runAllIO :: Config -> Sem '[Reader Config, Db, Log, Lift IO] a -> IO a
+runAllIO config@Config{..} = do
   runM
   . runLogStdOut
+  . runDbIO dbPool
   . runReader config

@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 5326ec0428b6def191e32f02ca608b134aae9a3e90a0f80fb8569f197164c323
+-- hash: 88dbdddd8c7acf7248139c4a64311a7f54009a05f970c9864304d594cef53593
 
 name:           polysemy-servant
 version:        0.1.0.0
@@ -24,6 +24,7 @@ executable polysemy-servant
       AppBase
       Config
       Effects
+      Effects.DB
       Effects.Logging
       Generate
       Server.API.API
@@ -39,18 +40,24 @@ executable polysemy-servant
     , bytestring
     , dhall ==1.24.0
     , lens
+    , monad-logger
     , neat-interpolation
+    , persistent
+    , persistent-postgresql
     , polysemy
     , polysemy-plugin
     , postgresql-simple
     , purescript-bridge
     , relude
+    , resource-pool
+    , resourcet
     , servant
     , servant-purescript
     , servant-server
     , template-haskell
     , text
     , th-abstraction
+    , unliftio-core
     , wai
     , warp
   default-language: Haskell2010
