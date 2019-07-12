@@ -2,8 +2,7 @@ module Generate where
 
 import AppBase
 import           Language.PureScript.Bridge
-
-data BlogPost = BlogPost {id :: Int} deriving (Generic)
+import Entities
 
 writeFrontendTypes :: IO ()
 writeFrontendTypes = writePSTypes "./psTypes.purs"

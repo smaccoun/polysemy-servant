@@ -1,3 +1,5 @@
+{-# LANGUAGE NoDeriveAnyClass #-}
+
 module Entities where
 
 import AppBase

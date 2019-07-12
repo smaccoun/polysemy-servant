@@ -17,14 +17,15 @@ dependencies:
   - name: relude
   - text
   - bytestring
-  - polysemy
   - servant
   - servant-server
   - wai
   - warp
   - th-abstraction
   - purescript-bridge
+  - polysemy
   - polysemy-plugin
+  - polysemy-zoo
   - servant-purescript
   - purescript-bridge
   - postgresql-simple
@@ -68,6 +69,7 @@ default-extensions:
   - TypeFamilies
   - TypeOperators
   - UndecidableInstances
+  - DeriveAnyClass
   - DerivingStrategies
   - TypeSynonymInstances
 
