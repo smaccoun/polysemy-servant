@@ -14,4 +14,4 @@ RUN stack build --copy-bins --local-bin-path /usr/local/bin
 
 CMD /usr/local/bin/polysemy-servant
 
-EXPOSE 8080
+EXPOSE 8081
