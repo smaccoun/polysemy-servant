@@ -14,8 +14,7 @@ webApp :: Config -> Application
 webApp config = serve api $ hoistServer api (customHandler config) apiServer
 
 customHandler :: Config -> Sem AllAppEffects a -> Handler a
-customHandler config action = do
-  catchError handler' errorHandler
+customHandler config action = catchError handler' errorHandler
   where
     handler' = Handler . ExceptT $ (runServerIO config action)
     errorHandler :: ServantErr -> Handler a
