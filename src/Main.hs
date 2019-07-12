@@ -2,8 +2,7 @@ module Main where
 
 import           AppBase
 import           Polysemy
-import           Server.Serve    ( runServer )
-import Effects
+import Server.Serve (runServer)
 import Effects.Logging (log)
 import Effects.DB
 import Control.Monad.Logger (runStdoutLoggingT)
@@ -17,7 +16,4 @@ main = do
     let startMsg = "Starting up server" :: Text
     runResourceT $ runStdoutLoggingT $ do
       config <- runResourceT $ runStdoutLoggingT $ initConfig
-      liftIO $ runEffects config $ do
-        log startMsg
-        runSql $ (P.rawSql @(P.Entity BlogPost)) "SELECT * FROM blog LIMIT 10" []
-        sendM runServer
+      liftIO $ runServer config

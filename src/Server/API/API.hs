@@ -9,7 +9,10 @@ import Polysemy
 import Database.Persist (Entity(..), entityValues)
 import Database.Persist.Sql (rawSql)
 
-type API = "post" :> Get '[JSON] BlogPost
+type API = "post" :> Get '[JSON] [BlogPost]
+
+api :: Proxy API
+api = Proxy
 
 sampleBlogPost :: BlogPost
 sampleBlogPost =
@@ -22,5 +25,5 @@ getBlogPosts = do
   bps <- runSql $ rawSql @(Entity BlogPost) "SELECT * FROM blog_post LIMIT 10" []
   return $ entityVal <$> bps
 
-apiServer :: Server API
-apiServer = return sampleBlogPost
+apiServer :: ServerT API (Sem AllAppEffects)
+apiServer = getBlogPosts
