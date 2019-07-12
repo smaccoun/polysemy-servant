@@ -34,6 +34,7 @@ dependencies:
   - neat-interpolation
   - persistent
   - persistent-postgresql
+  - persistent-template
   - resource-pool
   - monad-logger
   - unliftio-core
@@ -67,7 +68,6 @@ default-extensions:
   - TypeFamilies
   - TypeOperators
   - UndecidableInstances
-  - DeriveAnyClass
   - DerivingStrategies
   - TypeSynonymInstances
 

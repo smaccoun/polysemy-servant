@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 88dbdddd8c7acf7248139c4a64311a7f54009a05f970c9864304d594cef53593
+-- hash: a33c47184133d4b192496e28ccc4890c14461ecdffef293f338db0dcece1312b
 
 name:           polysemy-servant
 version:        0.1.0.0
@@ -26,13 +26,14 @@ executable polysemy-servant
       Effects
       Effects.DB
       Effects.Logging
+      Entities
       Generate
       Server.API.API
       Server.Serve
       Paths_polysemy_servant
   hs-source-dirs:
       src
-  default-extensions: NoImplicitPrelude LambdaCase ConstraintKinds DataKinds DeriveGeneric FlexibleContexts FlexibleInstances GADTs GeneralizedNewtypeDeriving KindSignatures MultiParamTypeClasses OverloadedStrings PolyKinds QuasiQuotes RankNTypes RecordWildCards ScopedTypeVariables NamedFieldPuns DefaultSignatures StandaloneDeriving TemplateHaskell TypeApplications TypeFamilies TypeOperators UndecidableInstances DeriveAnyClass DerivingStrategies TypeSynonymInstances
+  default-extensions: NoImplicitPrelude LambdaCase ConstraintKinds DataKinds DeriveGeneric FlexibleContexts FlexibleInstances GADTs GeneralizedNewtypeDeriving KindSignatures MultiParamTypeClasses OverloadedStrings PolyKinds QuasiQuotes RankNTypes RecordWildCards ScopedTypeVariables NamedFieldPuns DefaultSignatures StandaloneDeriving TemplateHaskell TypeApplications TypeFamilies TypeOperators UndecidableInstances DerivingStrategies TypeSynonymInstances
   ghc-options: -threaded -rtsopts -with-rtsopts=-N -fwarn-tabs -fwarn-unused-imports -fwarn-overlapping-patterns -fwarn-incomplete-record-updates -fwarn-missing-signatures -fwarn-orphans -fwarn-identities -Wredundant-constraints -fplugin=Polysemy.Plugin
   build-depends:
       aeson
@@ -44,6 +45,7 @@ executable polysemy-servant
     , neat-interpolation
     , persistent
     , persistent-postgresql
+    , persistent-template
     , polysemy
     , polysemy-plugin
     , postgresql-simple
