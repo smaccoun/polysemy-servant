@@ -8,6 +8,9 @@ import Database.Persist.Postgresql (createPostgresqlPool, ConnectionString)
 import Control.Monad.Logger
 import Control.Monad.IO.Unlift
 import qualified Database.PostgreSQL.Simple as PG
+import Control.Exception
+import qualified Configuration.Dotenv as Dotenv
+import System.Environment (setEnv)
 
 data Context =
   Context
@@ -19,9 +22,18 @@ data Config =
   Config
     {dbPool :: Pool SqlBackend}
 
-readContext :: MonadIO m => m Context
-readContext =
-  liftIO $ input auto "./config/config.dhall"
+readContext :: IO Context
+readContext = do
+  _ <- loadDotEnvIfExists
+  input auto "./config/config.dhall"
+
+loadDotEnvIfExists :: IO ()
+loadDotEnvIfExists = do
+  extraEnvs <- liftIO $ try @SomeException $ Dotenv.loadFile Dotenv.defaultConfig
+  case extraEnvs of
+    Right eenvs ->
+      forM_ eenvs $ \(ename, evalue) -> setEnv ename evalue
+    Left e -> print "No dotenv file"
 
 initConfig :: (MonadLogger m, MonadUnliftIO m) => m Config
 initConfig = do

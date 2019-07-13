@@ -19,7 +19,8 @@ in
   {Development =
      defaultConfig
      /\
-     {dbConnectHost = localHost }
+     {dbConnectHost = localHost
+     }
   ,Test =
      defaultConfig
      /\

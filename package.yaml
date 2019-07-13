@@ -33,6 +33,7 @@ dependencies:
   - template-haskell
   - th-abstraction
   - lens
+  - dotenv
   - neat-interpolation
   - persistent
   - persistent-postgresql
