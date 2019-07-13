@@ -16,7 +16,7 @@ api = Proxy
 
 getBlogPosts :: '[Db] >@> [BlogPost]
 getBlogPosts = do
-  bps <- runSql $ rawSql @(Entity BlogPost) "SELECT * FROM blog_post LIMIT 10" []
+  bps <- runSql $ rawSql @(Entity BlogPost) "SELECT ?? FROM blog_post" []
   return $ entityVal <$> bps
 
 apiServer :: ServerT API (Sem AllAppEffects)
