@@ -5,9 +5,9 @@ let DBConfig =
    , dbConnectUser : Text
    }
 
-let localHost = "http://localhost"
+let localHost = "localhost"
 let defaultPort = Natural/toInteger 5432
-let dbConnectDatabase = "blog"
+let dbConnectDatabase = "blog_post"
 
 let defaultConfig =
       {dbConnectPort = defaultPort

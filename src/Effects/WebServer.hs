@@ -1,7 +1,6 @@
 module Effects.WebServer where
 
 import AppBase hiding (Reader, runReader)
-import Config
 import Polysemy
 import Polysemy.Operators
 import Polysemy.Error

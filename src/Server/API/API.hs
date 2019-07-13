@@ -9,16 +9,10 @@ import Polysemy
 import Database.Persist (Entity(..), entityValues)
 import Database.Persist.Sql (rawSql)
 
-type API = "post" :> Get '[JSON] [BlogPost]
+type API = "blog_post" :> Get '[JSON] [BlogPost]
 
 api :: Proxy API
 api = Proxy
-
-sampleBlogPost :: BlogPost
-sampleBlogPost =
-  BlogPost "howToBeCool" "justBeCoolMan"
-
-type (:!) r a = Members r a
 
 getBlogPosts :: '[Db] >@> [BlogPost]
 getBlogPosts = do
