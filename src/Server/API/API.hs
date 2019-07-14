@@ -5,15 +5,15 @@ import           Servant.API
 import           Servant.Server
 import Entities
 import Effects
-import Effects.DSL.CrudAPI (getByEntityId, getEntities)
+import Effects.DSL.CrudAPI
 import Polysemy
-import Database.Persist (Entity(..))
-import Database.Persist.Sql (rawSql, toSqlKey)
-import Database.Persist.Types (PersistValue(..))
 
 type API =
-       "blog_post" :> Get '[JSON] [BlogPost]
-  :<|> "blog_post" :> Capture "blogPostId" Int64 :> Get '[JSON] (Maybe BlogPost)
+    "blog_post" :>
+      (    Get '[JSON] [BlogPost]
+      :<|> Capture "blogPostId" Int64 :> Get '[JSON] (Maybe BlogPost)
+      :<|> ReqBody '[JSON] [BlogPost] :> Post '[JSON] [Int64]
+      )
 
 api :: Proxy API
 api = Proxy
@@ -22,3 +22,4 @@ apiServer :: ServerT API (Sem AllAppEffects)
 apiServer =
        getEntities (Proxy @BlogPost) [] []
   :<|> getByEntityId BlogPostId
+  :<|> createEntities

@@ -5,7 +5,7 @@ module Entities where
 import AppBase
 import           Database.Persist
 import           Database.Persist.TH
-import Data.Aeson (ToJSON)
+import Data.Aeson (ToJSON, FromJSON)
 
 share [mkPersist sqlSettings, mkMigrate "migrateAll"] [persistLowerCase|
 Person
@@ -25,4 +25,5 @@ Products
 |]
 
 instance ToJSON BlogPost
+instance FromJSON BlogPost
 
