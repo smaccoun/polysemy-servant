@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: a269ae07a892ac0f4e1beee2846592be4f0b5feaef7b200bf031201baed41302
+-- hash: 81a8f7d425dd58b8788835bfbc2b5c86c67cb86729dc0812f60820dbcb09015d
 
 name:           polysemy-servant
 version:        0.1.0.0
@@ -25,6 +25,7 @@ executable polysemy-servant
       Config
       Effects
       Effects.DB
+      Effects.DSL.CrudAPI
       Effects.Logging
       Effects.WebServer
       Entities
