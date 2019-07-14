@@ -5,8 +5,9 @@ import           Servant.API
 import           Servant.Server
 import Entities
 import Effects
+import Effects.DB (getById)
 import Polysemy
-import Database.Persist (Entity(..), entityValues)
+import Database.Persist (Entity(..))
 import Database.Persist.Sql (rawSql, toSqlKey)
 import Database.Persist.Types (PersistValue(..))
 
@@ -24,11 +25,8 @@ getBlogPosts = do
 
 getBlogPost :: Int64 -> '[Db] >@> Maybe BlogPost
 getBlogPost bpId = do
-  bps <- runSql $ rawSql @(Entity BlogPost) "SELECT ?? FROM blog_post WHERE id=?" [PersistInt64 bpId]
-  return $
-    nonEmpty bps
-    & fmap head
-    & fmap entityVal
+  mbBP <- getById BlogPostId bpId
+  return $ entityVal <$> mbBP
 
 apiServer :: ServerT API (Sem AllAppEffects)
 apiServer = getBlogPosts :<|> getBlogPost

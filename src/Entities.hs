@@ -17,6 +17,11 @@ BlogPost
     title Text
     body Text
     deriving Generic Show
+
+Products
+    name Text
+    price Int
+    deriving Generic Show
 |]
 
 instance ToJSON BlogPost
