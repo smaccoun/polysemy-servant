@@ -8,19 +8,13 @@ import Effects
 import Effects.DB
 import Polysemy
 import Database.Persist (Entity(..))
+import Server.CRUDServer
 
-type API =
-    "blog_post" :>
-      (    Get '[JSON] [Entity BlogPost]
-      :<|> Capture "blogPostId" Int64 :> Get '[JSON] (Maybe (Entity BlogPost))
-      :<|> ReqBody '[JSON] [BlogPost] :> Post '[JSON] [BlogPostId]
-      )
+type API = EntityCrudAPI "blogPost" "blogPostId" BlogPost
 
 api :: Proxy API
 api = Proxy
 
 apiServer :: ServerT API (Sem AllAppEffects)
 apiServer =
-       getEntities (Proxy @BlogPost) [] []
-  :<|> getEntityById BlogPostId
-  :<|> insertEntities
+  crudEntityServer (Proxy @BlogPost) (BlogPostId)
