@@ -2,7 +2,7 @@
 
 module Entities where
 
-import AppBase
+import AppBase hiding (Product(..))
 import           Database.Persist
 import           Database.Persist.TH
 import Database.Persist.Sql (SqlBackend, fromSqlKey)
@@ -26,7 +26,7 @@ BlogPost
     body Text
     deriving Generic Show
 
-Products
+Product
     name Text
     price Int
     deriving Generic Show
@@ -36,6 +36,11 @@ Products
 instance ToJSON BlogPost
 instance FromJSON BlogPost
 instance Arbitrary BlogPost where
+  arbitrary = genericArbitraryU
+
+instance ToJSON Product
+instance FromJSON Product
+instance Arbitrary Product where
   arbitrary = genericArbitraryU
 
 instance Validity BlogPost
