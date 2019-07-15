@@ -3,7 +3,7 @@ module Effects.DB where
 import AppBase
 import Polysemy
 import Data.Pool (Pool)
-import Database.Persist.Sql (SqlBackend, fromSqlKey)
+import Database.Persist.Sql (SqlBackend, toSqlKey)
 import qualified Database.Persist.Sql as P
 import Database.Persist
 
@@ -14,7 +14,7 @@ data Db m a where
   GetEntities :: (CommonRecordConstraint record) => Proxy record -> [Filter record] -> [SelectOpt record] -> Db m [Entity record]
   GetEntityById :: CommonRecordConstraint record => EntityField record (Key record) -> Int64 -> Db m (Maybe (P.Entity record))
   InsertEntities :: CommonRecordConstraint record => [record] -> Db m [Key record]
-  ReplaceEntity  :: CommonRecordConstraint record => Key record -> record -> Db m ()
+  ReplaceEntity  :: CommonRecordConstraint record => Int64 -> record -> Db m ()
 
 makeSem ''Db
 
@@ -29,7 +29,7 @@ runDbIO pool' = interpret $ \case
   GetEntityById recordIdCon idVal -> runQ $
     selectFirst [recordIdCon ==. P.toSqlKey idVal] []
   InsertEntities vals' -> runQ $ insertMany vals'
-  ReplaceEntity key' newRecord -> runQ $ replace key' newRecord
+  ReplaceEntity key' newRecord -> runQ $ replace (toSqlKey key') newRecord
   where
     runQ :: ReaderT SqlBackend IO v -> Sem r v
     runQ q = sendM $ runPool q
