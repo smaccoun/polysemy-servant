@@ -13,8 +13,8 @@ data Db m a where
   RunSql ::  forall a m. ReaderT SqlBackend IO a -> Db m a
   GetEntitiesById :: (CommonRecordConstraint record) => [Filter record] -> [SelectOpt record] -> Db m [Entity record]
   GetEntityById :: CommonRecordConstraint record => EntityField record (Key record) -> Int64 -> Db m (Maybe (P.Entity record))
-  InsertEntities :: CommonRecordConstraint val => [val] -> Db m [Key val]
---  ReplaceEntity  :: CommonRecordConstraint val => Key record -> val -> Db m ()
+  InsertEntities :: CommonRecordConstraint record => [record] -> Db m [Key record]
+  ReplaceEntity  :: CommonRecordConstraint record => Key record -> record -> Db m ()
 
 makeSem ''Db
 
@@ -29,7 +29,7 @@ runDbIO pool' = interpret $ \case
   GetEntityById recordIdCon idVal -> runQ $
     selectFirst [recordIdCon ==. P.toSqlKey idVal] []
   InsertEntities vals' -> runQ $ insertMany vals'
---  ReplaceEntity key' newRecord -> runQ $ replace key' newRecord
+  ReplaceEntity key' newRecord -> runQ $ replace key' newRecord
   where
     runQ :: ReaderT SqlBackend IO v -> Sem r v
     runQ q = sendM $ runPool q
