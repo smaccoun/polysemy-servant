@@ -14,24 +14,28 @@ data Db m a where
   GetEntitiesById :: (CommonRecordConstraint record) => [Filter record] -> [SelectOpt record] -> Db m [Entity record]
   GetEntityById :: CommonRecordConstraint record => EntityField record (Key record) -> Int64 -> Db m (Maybe (P.Entity record))
   InsertEntities :: CommonRecordConstraint val => [val] -> Db m [Key val]
+--  ReplaceEntity  :: CommonRecordConstraint val => Key record -> val -> Db m ()
 
 makeSem ''Db
 
-runDbIO :: Member (Lift IO) r
+runDbIO :: forall r a. Member (Lift IO) r
         => Pool SqlBackend
         -> Sem (Db ': r) a
         -> Sem r a
 runDbIO pool' = interpret $ \case
-  RunSql sql' -> sendM $ runSqlIO pool' sql'
-  GetEntitiesById withMatchingFilters andSelectOptions -> sendM $ runQ $
+  RunSql sql' -> runQ sql'
+  GetEntitiesById withMatchingFilters andSelectOptions -> runQ $
     selectList withMatchingFilters andSelectOptions
-  GetEntityById recordIdCon idVal -> sendM $ runQ $
+  GetEntityById recordIdCon idVal -> runQ $
     selectFirst [recordIdCon ==. P.toSqlKey idVal] []
-  InsertEntities vals' -> sendM $ runQ $
-    forM vals' P.insert
+  InsertEntities vals' -> runQ $ insertMany vals'
+--  ReplaceEntity key' newRecord -> runQ $ replace key' newRecord
   where
-    runQ :: ReaderT SqlBackend IO v -> IO v
-    runQ = runSqlIO pool'
+    runQ :: ReaderT SqlBackend IO v -> Sem r v
+    runQ q = sendM $ runPool q
+
+    runPool :: ReaderT SqlBackend IO v -> IO v
+    runPool = runSqlIO pool'
 
 runSqlIO :: Pool SqlBackend -> ReaderT SqlBackend IO a -> IO a
 runSqlIO pool' sql' = P.runSqlPool sql' pool'

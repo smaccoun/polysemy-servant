@@ -42,6 +42,12 @@ dependencies:
   - monad-logger
   - unliftio-core
   - resourcet
+  - generic-random
+  - QuickCheck
+  - quickcheck-instances
+  - validity
+  - genvalidity
+  - genvalidity-text
   - name: dhall
     version: "1.24.0"
 
