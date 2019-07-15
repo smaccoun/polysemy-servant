@@ -5,7 +5,9 @@ module Entities where
 import AppBase
 import           Database.Persist
 import           Database.Persist.TH
-import Data.Aeson (ToJSON, FromJSON)
+import Database.Persist.Sql (SqlBackend, fromSqlKey)
+import Data.Aeson
+import qualified Data.HashMap.Strict as HM
 import Generic.Random
 import Test.QuickCheck
 import Test.QuickCheck.Instances
@@ -30,6 +32,7 @@ Products
     deriving Generic Show
 |]
 
+
 instance ToJSON BlogPost
 instance FromJSON BlogPost
 instance Arbitrary BlogPost where
@@ -38,3 +41,10 @@ instance Arbitrary BlogPost where
 instance Validity BlogPost
 instance GenUnchecked BlogPost
 instance GenValid BlogPost
+
+instance (PersistQueryRead SqlBackend, PersistEntityBackend record ~ BaseBackend SqlBackend, PersistEntity record, ToBackendKey SqlBackend record, ToJSON record) => ToJSON (Entity record) where
+  toJSON (Entity key' rec') =
+    case toJSON rec' of
+      Object recordObj ->
+        Object $ HM.fromList $ [("id", Number $ fromIntegral $ fromSqlKey key')] <> (HM.toList recordObj)
+      _ -> Null -- TODO? This doesnt seem right

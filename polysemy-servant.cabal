@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 32c58867428ca3be91b940333f6f5bff1ed86d273567e7a9ab9a956bc23cee48
+-- hash: 8f0c7ed0546332bbe215eb658a87db2e20145943ea98b938f3737b0b7ed21f96
 
 name:           polysemy-servant
 version:        0.1.0.0
@@ -40,6 +40,7 @@ executable polysemy-servant
   build-depends:
       QuickCheck
     , aeson
+    , aeson-extra
     , base >=4.7 && <5
     , bytestring
     , dhall ==1.24.0
@@ -70,6 +71,7 @@ executable polysemy-servant
     , text
     , th-abstraction
     , unliftio-core
+    , unordered-containers
     , validity
     , wai
     , warp

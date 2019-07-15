@@ -3,15 +3,15 @@ module Effects.DB where
 import AppBase
 import Polysemy
 import Data.Pool (Pool)
-import Database.Persist.Sql (SqlBackend)
+import Database.Persist.Sql (SqlBackend, fromSqlKey)
 import qualified Database.Persist.Sql as P
-import Database.Persist hiding (insert)
+import Database.Persist
 
 type CommonRecordConstraint record = (PersistQueryRead SqlBackend, PersistEntityBackend record ~ BaseBackend SqlBackend, PersistEntity record, ToBackendKey SqlBackend record)
 
 data Db m a where
   RunSql ::  forall a m. ReaderT SqlBackend IO a -> Db m a
-  GetEntitiesById :: (CommonRecordConstraint record) => [Filter record] -> [SelectOpt record] -> Db m [Entity record]
+  GetEntities :: (CommonRecordConstraint record) => Proxy record -> [Filter record] -> [SelectOpt record] -> Db m [Entity record]
   GetEntityById :: CommonRecordConstraint record => EntityField record (Key record) -> Int64 -> Db m (Maybe (P.Entity record))
   InsertEntities :: CommonRecordConstraint record => [record] -> Db m [Key record]
   ReplaceEntity  :: CommonRecordConstraint record => Key record -> record -> Db m ()
@@ -24,7 +24,7 @@ runDbIO :: forall r a. Member (Lift IO) r
         -> Sem r a
 runDbIO pool' = interpret $ \case
   RunSql sql' -> runQ sql'
-  GetEntitiesById withMatchingFilters andSelectOptions -> runQ $
+  GetEntities _ withMatchingFilters andSelectOptions -> runQ $
     selectList withMatchingFilters andSelectOptions
   GetEntityById recordIdCon idVal -> runQ $
     selectFirst [recordIdCon ==. P.toSqlKey idVal] []
