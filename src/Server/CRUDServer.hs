@@ -21,7 +21,10 @@ type family EntityCrudAPI (root :: Symbol) (byId :: Symbol) (record :: Type) whe
       )
 
 
-crudEntityServer :: (Member Db r) => (CommonRecordConstraint record) => Proxy record -> EntityField record (Key record) -> ServerT (EntityCrudAPI "blog_post" "blogPostId" record) (Sem r)
+crudEntityServer :: (Member Db r, CommonRecordConstraint record)
+                 => Proxy record
+                 -> EntityField record (Key record)
+                 -> ServerT (EntityCrudAPI rootStr captureIdSymbol record) (Sem r)
 crudEntityServer proxyRecord idMatch =
        getEntities proxyRecord [] []
   :<|> getEntityById idMatch
