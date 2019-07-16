@@ -20,6 +20,8 @@ dependencies:
   - bytestring
   - servant
   - servant-server
+  - servant-swagger
+  - servant-swagger-ui
   - wai
   - warp
   - mtl
@@ -50,6 +52,7 @@ dependencies:
   - genvalidity
   - genvalidity-text
   - unordered-containers
+  - swagger2
   - name: dhall
     version: "1.24.0"
 

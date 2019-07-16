@@ -25,3 +25,8 @@ customHandler config action = catchError handler' errorHandler
 
 runServer :: Config -> IO ()
 runServer config = run 8080 (webApp config)
+
+apiWithDocsServer :: ServerT ApiWithDocs (Sem AllAppEffects)
+apiWithDocsServer =
+       sendM (swaggerSchemaUIServer todoSwagger)
+  :<|> apiServer

@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 94c4406916a039dc4d1e29c6d5ba670f68eb4b9437567e0140a841d66cc1460e
+-- hash: 52f4d54b307ec314e381ca21f9acb66a88456bb0a256f692b9c2cd0e43be1cf4
 
 name:           polysemy-servant
 version:        0.1.0.0
@@ -68,6 +68,9 @@ executable polysemy-servant
     , servant
     , servant-purescript
     , servant-server
+    , servant-swagger
+    , servant-swagger-ui
+    , swagger2
     , template-haskell
     , text
     , th-abstraction
