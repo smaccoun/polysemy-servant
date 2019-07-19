@@ -13,6 +13,7 @@ extra-source-files:
 dependencies:
   - aeson
   - aeson-extra
+  - data-default-class
   - name: base
     version: ">= 4.7 && < 5"
   - name: relude
@@ -21,6 +22,7 @@ dependencies:
   - servant
   - servant-server
   - wai
+  - wai-extra
   - warp
   - mtl
   - th-abstraction

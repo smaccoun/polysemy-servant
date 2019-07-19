@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 94c4406916a039dc4d1e29c6d5ba670f68eb4b9437567e0140a841d66cc1460e
+-- hash: 7a32ba300d8907c31e6e1f7a4a97a6b28262c54f28aeb128ad0ce3122cd37414
 
 name:           polysemy-servant
 version:        0.1.0.0
@@ -44,6 +44,7 @@ executable polysemy-servant
     , aeson-extra
     , base >=4.7 && <5
     , bytestring
+    , data-default-class
     , dhall ==1.24.0
     , dotenv
     , generic-random
@@ -75,5 +76,6 @@ executable polysemy-servant
     , unordered-containers
     , validity
     , wai
+    , wai-extra
     , warp
   default-language: Haskell2010

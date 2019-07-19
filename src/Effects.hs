@@ -19,13 +19,13 @@ import Polysemy.Operators
 import Config (Config(..))
 import Servant.Server (ServantErr)
 
-type AllAppEffects = '[Reader Config, CrudAPI, Db, Log, Error ServantErr, Lift IO]
+type AllAppEffects = '[Reader Config, CrudAPI, Db, Error ServantErr, Log, Lift IO]
 
-runServerIO :: Config -> Sem '[Reader Config, CrudAPI, Db, Log, Error ServantErr, Lift IO] a -> IO (Either ServantErr a)
+runServerIO :: Config -> Sem '[Reader Config, CrudAPI, Db, Error ServantErr, Log, Lift IO] a -> IO (Either ServantErr a)
 runServerIO config@Config{..} =
   runM
-  . runError
   . runLogStdOut
+  . handleServantExceptions config
   . runDbIO dbPool
   . runCrudApiIO
   . runReader config
@@ -42,4 +42,11 @@ runAllIO config@Config{..} = do
   . runCrudApiIO
   . runReader config
 
-
+handleServantExceptions :: Member Log r => Config -> Sem (Error ServantErr ': r) a -> Sem r (Either ServantErr a)
+handleServantExceptions config curEffects = do
+  res <- runError curEffects
+  case res of
+    Right a -> return $ Right a
+    Left e -> do
+      log $ show e
+      return $ Left e
