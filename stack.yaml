@@ -30,10 +30,13 @@ extra-deps:
 - aeson-1.4.3.0
 - servant-purescript-0.9.0.3@sha256:d3755a503d2111e24781ad74f0a8b2337d07bb2dbf8d33e145717e9318e42c60
 - servant-subscriber-0.6.0.2@sha256:e1cf0d273f2d072f9b36c40a2e18cb1663beaeef400b2351b9a0e15629a12076
-- polysemy-0.4.0.0@sha256:6dfd2070c9f1f8e64ba9fbeee2af59e2893cac8acb066c2c80cf6428e2ddcef9
-- polysemy-plugin-0.2.1.0@sha256:db5aa30eb9610c6c7aca782f68a128fef4656c867ed29ad328eb1322d8d9b414
 - dhall-1.24.0@sha256:1e0e0be836164cee6725f80f81ac2726b2de0acf6efdf622cf05e90323f0a911
-- polysemy-zoo-0.3.0.0@sha256:ea988ca3daecbc582c0ff740124b54142f99289972433c07219efe26bff69b2b
+- polysemy-0.7.0.0@sha256:e080487a6f923d91fe8363cb901770c38ce96c2011f79cae9c5bc5a2e23eb454
+- polysemy-plugin-0.2.2.0@sha256:2116c574077b89e9fce2431dc6f58682f9c3f6c6d151442a7a23b2e542d695d6
+- polysemy-zoo-0.4.0.1@sha256:33f35f7639da78255fbd26a7cf6af3a42164f04ca170f14cde7081d085dfca28
+- first-class-families-0.5.0.0@sha256:6e1488c502d5b1e780739a53edab65a307c6bf94d4232fab70e696e87f0fa087
+- type-errors-0.2.0.0@sha256:b8f97a0cf72f4fcdc9bfd02d753f84e65e5e5d165d53f82947a95cdcbd7f2945
+- unagi-chan-0.4.1.0@sha256:2fe7e9e4fd4bda0e42762824ecd9059f20069939774406ddd54f9989b47b3e1a
 
 # Override default flag values for local packages and extra-deps
 # flags: {}

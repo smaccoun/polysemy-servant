@@ -2,10 +2,9 @@ module Main where
 
 import           AppBase
 import Server.Serve (runServer)
-import Config (initConfig, Config(..))
-import Control.Monad.Logger (runStdoutLoggingT, logInfoN, MonadLogger(..), LoggingT(..))
+import Config (initConfig)
+import Control.Monad.Logger (runStdoutLoggingT, logInfoN, LoggingT(..))
 import Control.Monad.Trans.Resource (runResourceT, ResourceT(..))
-import Control.Monad.IO.Unlift
 
 main :: IO ()
 main = do
