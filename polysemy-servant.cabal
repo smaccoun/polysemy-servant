@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 7a32ba300d8907c31e6e1f7a4a97a6b28262c54f28aeb128ad0ce3122cd37414
+-- hash: 02335c51aab1e37d81d5d4514a8627fd3540e6d88c3bb22f18ae127c00dcc2c2
 
 name:           polysemy-servant
 version:        0.1.0.0
@@ -24,6 +24,9 @@ executable polysemy-servant
       AppBase
       Config
       Effects
+      Effects.AWS
+      Effects.AWS.Base
+      Effects.AWS.S3
       Effects.DB
       Effects.DSL.CrudAPI
       Effects.Logging
@@ -42,11 +45,15 @@ executable polysemy-servant
       QuickCheck
     , aeson
     , aeson-extra
+    , amazonka
+    , amazonka-s3
     , base >=4.7 && <5
     , bytestring
+    , conduit
     , data-default-class
     , dhall ==1.24.0
     , dotenv
+    , exceptions
     , generic-random
     , genvalidity
     , genvalidity-text
@@ -72,6 +79,7 @@ executable polysemy-servant
     , template-haskell
     , text
     , th-abstraction
+    , time
     , unliftio-core
     , unordered-containers
     , validity

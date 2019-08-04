@@ -21,7 +21,7 @@ import Servant.Server (ServantErr)
 
 type AllAppEffects = '[Reader Config, CrudAPI, Db, Error ServantErr, Log, Lift IO]
 
-runServerIO :: Config -> Sem '[Reader Config, CrudAPI, Db, Error ServantErr, Log, Lift IO] a -> IO (Either ServantErr a)
+runServerIO :: Config -> Sem AllAppEffects a -> IO (Either ServantErr a)
 runServerIO config@Config{..} =
   runM
   . runLogStdOut

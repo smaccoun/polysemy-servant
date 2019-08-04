@@ -7,20 +7,27 @@ import Database.Persist.Sql (SqlBackend)
 import Database.Persist.Postgresql (createPostgresqlPool, ConnectionString)
 import Control.Monad.Logger
 import Control.Monad.IO.Unlift
+import Control.Monad.Catch
 import qualified Database.PostgreSQL.Simple as PG
-import Control.Exception
 import qualified Configuration.Dotenv as Dotenv
 import System.Environment (setEnv)
+import qualified Network.AWS as AWS
+import Network.AWS.Data (fromText)
+import Control.Lens (preview, _Right)
 
 data Context =
   Context
     {env :: Environment
     ,dbConfig :: DBConnectInfo
-    } deriving (Generic, Show)
+    ,awsAccessKey :: AWS.AccessKey
+    ,awsSecretKey :: AWS.SecretKey
+    } deriving (Generic)
 
 data Config =
   Config
-    {dbPool :: Pool SqlBackend}
+    {dbPool :: Pool SqlBackend
+    ,awsEnv :: AWS.Env
+    }
 
 readContext :: IO Context
 readContext = do
@@ -29,18 +36,22 @@ readContext = do
 
 loadDotEnvIfExists :: IO ()
 loadDotEnvIfExists = do
-  extraEnvs <- liftIO $ try @SomeException $ Dotenv.loadFile Dotenv.defaultConfig
+  extraEnvs <- try @_ @SomeException $ Dotenv.loadFile Dotenv.defaultConfig
   case extraEnvs of
     Right eenvs ->
       forM_ eenvs $ \(ename, evalue) -> setEnv ename evalue
     Left e -> print "No dotenv file"
 
-initConfig :: (MonadLogger m, MonadUnliftIO m) => m Config
+initConfig :: (MonadLogger m, MonadUnliftIO m, MonadCatch m) => m Config
 initConfig = do
   context@Context{..} <- liftIO readContext
   pool' <- createPostgresqlPool (dbConnString dbConfig) 1
+  awsEnv' <- AWS.newEnv $ AWS.FromKeys awsAccessKey awsSecretKey
   return $
-    Config {dbPool = pool'}
+    Config
+      {dbPool = pool'
+      ,awsEnv = awsEnv'
+      }
 
 dbConnString :: DBConnectInfo -> ConnectionString
 dbConnString dbConn = PG.postgreSQLConnectionString $ pgConnectInfo dbConn
@@ -73,3 +84,12 @@ data DBConnectInfo =
 instance Interpret Environment
 instance Interpret Context
 instance Interpret DBConnectInfo
+instance Interpret AWS.AccessKey where
+  autoWith o =
+    let Type a b = autoWith o
+     in Type ((preview _Right . fromText) <=< a) b
+
+instance Interpret AWS.SecretKey where
+  autoWith o =
+    let Type a b = autoWith o
+     in Type ((preview _Right . fromText) <=< a) b

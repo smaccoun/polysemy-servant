@@ -13,7 +13,12 @@ extra-source-files:
 dependencies:
   - aeson
   - aeson-extra
+  - amazonka
+  - amazonka-s3
+  - conduit
+  - time
   - data-default-class
+  - exceptions
   - name: base
     version: ">= 4.7 && < 5"
   - name: relude
