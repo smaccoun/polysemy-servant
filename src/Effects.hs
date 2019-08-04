@@ -11,6 +11,7 @@ module Effects
 import AppBase hiding (Reader, runReader)
 import Effects.Logging
 import Effects.DB (Db, runDbIO, runSql)
+import Effects.AWS.S3
 import Effects.DSL.CrudAPI (runCrudApiIO, CrudAPI(..))
 import Polysemy
 import Polysemy.Reader
@@ -19,16 +20,17 @@ import Polysemy.Operators
 import Config (Config(..))
 import Servant.Server (ServantErr)
 
-type AllAppEffects = '[Reader Config, CrudAPI, Db, Error ServantErr, Log, Lift IO]
+type AllAppEffects = '[CrudAPI, S3, Db, Error ServantErr, Log, Reader Config, Lift IO]
 
 runServerIO :: Config -> Sem AllAppEffects a -> IO (Either ServantErr a)
 runServerIO config@Config{..} =
   runM
+  . runReader config
   . runLogStdOut
   . handleServantExceptions config
   . runDbIO dbPool
+  . runS3
   . runCrudApiIO
-  . runReader config
 
 runEffects :: Config -> Sem '[Reader Config, CrudAPI, Db, Log, Lift IO] a -> IO a
 runEffects config a = do

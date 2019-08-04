@@ -10,7 +10,7 @@ import Data.Time.Clock
 import Effects.AWS
 
 data S3 m a where
-  GetPresignedURL :: BucketName -> ObjectKey -> S3 m ByteString
+  GetPresignedURL :: BucketName -> ObjectKey -> S3 m Text
 
 makeSem ''S3
 
@@ -21,7 +21,8 @@ runS3 = interpret $ \case
     ts  <- sendM $ getCurrentTime
 
     let getPresignedUrl' = presignURL ts 30 (getObject b k)
-    sendM $ liftIO $ runAWSIO config getPresignedUrl'
+        runCmd = decodeUtf8 <$> runAWSIO config getPresignedUrl'
+    sendM $ liftIO $ runCmd
 
 
 
