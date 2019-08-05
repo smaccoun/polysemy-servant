@@ -1,52 +1,53 @@
 module Effects
-  (runAllIO
-  ,runEffects
-  ,module Polysemy.Operators
-  ,Db
-  ,runSql
-  ,AllAppEffects
-  ,runServerIO
-  ) where
+    ( runAllIO
+    , runEffects
+    , module Polysemy.Operators
+    , Db
+    , runSql
+    , AllAppEffects
+    , runServerIO
+    ) where
 
-import AppBase hiding (Reader, runReader)
-import Effects.Logging
-import Effects.DB (Db, runDbIO, runSql)
-import Effects.DSL.CrudAPI (runCrudApiIO, CrudAPI(..))
-import Polysemy
-import Polysemy.Reader
-import Polysemy.Error (runError, Error(..))
-import Polysemy.Operators
-import Config (Config(..))
-import Servant.Server (ServantErr)
+import           AppBase             hiding ( Reader, runReader )
 
-type AllAppEffects = '[Reader Config, CrudAPI, Db, Error ServantErr, Log, Lift IO]
+import           Config              ( Config(..) )
 
-runServerIO :: Config -> Sem '[Reader Config, CrudAPI, Db, Error ServantErr, Log, Lift IO] a -> IO (Either ServantErr a)
+import           Effects.DB          ( Db, runDbIO, runSql )
+import           Effects.DSL.CrudAPI ( CrudAPI(..), runCrudApiIO )
+import           Effects.Logging
+
+import           Polysemy
+import           Polysemy.Error      ( Error(..), runError )
+import           Polysemy.Operators
+import           Polysemy.Reader
+
+import           Servant.Server      ( ServantErr )
+
+type AllAppEffects =
+    '[Reader Config, CrudAPI, Db, Error ServantErr, Log, Lift IO]
+
+runServerIO :: Config
+    -> Sem '[Reader Config, CrudAPI, Db, Error ServantErr, Log, Lift IO] a
+    -> IO (Either ServantErr a)
 runServerIO config@Config{..} =
-  runM
-  . runLogStdOut
-  . handleServantExceptions config
-  . runDbIO dbPool
-  . runCrudApiIO
-  . runReader config
+    runM . runLogStdOut . handleServantExceptions config . runDbIO dbPool
+    . runCrudApiIO . runReader config
 
-runEffects :: Config -> Sem '[Reader Config, CrudAPI, Db, Log, Lift IO] a -> IO a
+runEffects
+    :: Config -> Sem '[Reader Config, CrudAPI, Db, Log, Lift IO] a -> IO a
 runEffects config a = do
-  runAllIO config a
+    runAllIO config a
 
 runAllIO :: Config -> Sem '[Reader Config, CrudAPI, Db, Log, Lift IO] a -> IO a
 runAllIO config@Config{..} = do
-  runM
-  . runLogStdOut
-  . runDbIO dbPool
-  . runCrudApiIO
-  . runReader config
+    runM . runLogStdOut . runDbIO dbPool . runCrudApiIO . runReader config
 
-handleServantExceptions :: Member Log r => Config -> Sem (Error ServantErr ': r) a -> Sem r (Either ServantErr a)
+handleServantExceptions :: Member Log r => Config
+    -> Sem (Error ServantErr ': r) a -> Sem r (Either ServantErr a)
 handleServantExceptions config curEffects = do
-  res <- runError curEffects
-  case res of
-    Right a -> return $ Right a
-    Left e -> do
-      log $ show e
-      return $ Left e
+    res <- runError curEffects
+    case res of
+        Right a -> return $ Right a
+        Left e -> do
+            log $ show e
+            return $ Left e

@@ -5,6 +5,7 @@
     "DeriveGeneric",
     "GeneralizedNewtypeDeriving",
     "LambdaCase",
+    "KindSignatures",
     "NamedFieldPuns",
     "OverloadedStrings",
     "PatternGuards",
