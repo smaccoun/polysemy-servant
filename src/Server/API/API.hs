@@ -32,6 +32,7 @@ apiServer =
 fkTestThrow :: Sem AllAppEffects Int
 fkTestThrow = throw $ err500 {errBody = "meow"}
 
-getProtectedPic :: Member S3 r => Text -> Sem r Text
-getProtectedPic picName' = getPresignedURL (BucketName "fake-bucket") (ObjectKey picName')
+getProtectedPic :: Text -> '[S3] >@> Text
+getProtectedPic picName' =
+  getPresignedURL (BucketName "fake-bucket") (ObjectKey picName')
 

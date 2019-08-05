@@ -14,15 +14,12 @@ data S3 m a where
 
 makeSem ''S3
 
-runS3 :: Members '[Lift IO, Reader Config] r => Sem (S3 ': r) a -> Sem r a
+runS3 :: Members '[Lift IO, Aws, Reader Config] r => Sem (S3 ': r) a -> Sem r a
 runS3 = interpret $ \case
   GetPresignedURL b k -> do
     config <- ask
     ts  <- sendM $ getCurrentTime
 
     let getPresignedUrl' = presignURL ts 30 (getObject b k)
-        runCmd = decodeUtf8 <$> runAWSIO config getPresignedUrl'
-    sendM $ liftIO $ runCmd
-
-
+    decodeUtf8 <$> runAws getPresignedUrl'
 

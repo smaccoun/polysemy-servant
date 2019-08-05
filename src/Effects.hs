@@ -12,6 +12,7 @@ import AppBase hiding (Reader, runReader)
 import Effects.Logging
 import Effects.DB (Db, runDbIO, runSql)
 import Effects.AWS.S3
+import Effects.AWS
 import Effects.DSL.CrudAPI (runCrudApiIO, CrudAPI(..))
 import Polysemy
 import Polysemy.Reader
@@ -20,7 +21,7 @@ import Polysemy.Operators
 import Config (Config(..))
 import Servant.Server (ServantErr)
 
-type AllAppEffects = '[CrudAPI, S3, Db, Error ServantErr, Log, Reader Config, Lift IO]
+type AllAppEffects = '[CrudAPI, S3, Aws, Db, Error ServantErr, Log, Reader Config, Lift IO]
 
 runServerIO :: Config -> Sem AllAppEffects a -> IO (Either ServantErr a)
 runServerIO config@Config{..} =
@@ -29,6 +30,7 @@ runServerIO config@Config{..} =
   . runLogStdOut
   . handleServantExceptions config
   . runDbIO dbPool
+  . runAwsIO
   . runS3
   . runCrudApiIO
 
