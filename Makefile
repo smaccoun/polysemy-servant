@@ -1,3 +1,5 @@
+build:
+	stack build
 dev:
 	stack build --fast
 run:

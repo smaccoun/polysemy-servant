@@ -2,15 +2,13 @@ module Main where
 
 import           AppBase
 
-import           Config                       ( initConfig )
+import           Config                       (initConfig)
 
-import           Control.Monad.Logger         ( LoggingT(..)
-                                              , logInfoN
-                                              , runStdoutLoggingT
-                                              )
-import           Control.Monad.Trans.Resource ( ResourceT(..), runResourceT )
+import           Control.Monad.Logger         (LoggingT (..), logInfoN,
+                                               runStdoutLoggingT)
+import           Control.Monad.Trans.Resource (ResourceT (..), runResourceT)
 
-import           Server.Serve                 ( runServer )
+import           Server.Serve                 (runServer)
 
 main :: IO ()
 main = do
